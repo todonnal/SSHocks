@@ -2,7 +2,7 @@
                                        
 SSHocks was born out of a penetration testing need. On a Red Team engagement, we need to get a Socks5 proxy up and fast. We originally had one working through an SSH tunnel using OpenSSH installed on a Windows 10 target. However, partway through our engagement, the client placed protections that stopped ssh.exe from functioning. I got to work and cobbled together this simple SSH client with full Socks5 support. I wanted it to be a single executable file so it was easy to upload. This project can be published via *dotnet* as a single file.
 
-Example: *dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true*
+-Example: *dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true*
 
 The latest release is confirmed to work on Windows 10 hosts. It has not yet been tested on other versions of Windows. (I just built it! Give me time man!) If you've tried it on something other than Windows 10, please let me know!
 
